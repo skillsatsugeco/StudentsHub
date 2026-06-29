@@ -66,15 +66,87 @@ function setupDatabase() {
   // Setup Categories sheet
   sheet = ss.insertSheet('Categories');
   sheet.appendRow(['Category ID', 'Category Name']);
-  sheet.appendRow(['1', 'Fashion']);
-  sheet.appendRow(['2', 'Electronics']);
-  sheet.appendRow(['3', 'Food & Beverages']);
+  sheet.appendRow(['1',  'Food & Beverages']);
+  sheet.appendRow(['2',  'Fashion & Clothing']);
+  sheet.appendRow(['3',  'Electronics & Gadgets']);
+  sheet.appendRow(['4',  'Books & Stationery']);
+  sheet.appendRow(['5',  'Beauty & Personal Care']);
+  sheet.appendRow(['6',  'Health & Wellness']);
+  sheet.appendRow(['7',  'Services & Skills']);
+  sheet.appendRow(['8',  'Agriculture & Farm Produce']);
+  sheet.appendRow(['9',  'Handmade & Crafts']);
+  sheet.appendRow(['10', 'Sports & Fitness']);
+  sheet.appendRow(['11', 'Home & Living']);
+  sheet.appendRow(['12', 'Baby & Kids']);
+  sheet.appendRow(['13', 'Arts & Entertainment']);
+  sheet.appendRow(['14', 'Transport & Delivery']);
+  sheet.appendRow(['15', 'Printing & Stationery']);
+  sheet.appendRow(['16', 'Photography & Media']);
+  sheet.appendRow(['17', 'Event & Party Supplies']);
+  sheet.appendRow(['18', 'Detergents & Cleaning']);
+  sheet.appendRow(['19', 'Cosmetics & Skincare']);
+  sheet.appendRow(['20', 'Hair Products']);
+  sheet.appendRow(['21', 'Perfumes & Fragrances']);
+  sheet.appendRow(['22', 'Shoes & Footwear']);
+  sheet.appendRow(['23', 'Bags & Accessories']);
+  sheet.appendRow(['24', 'Jewelry & Watches']);
+  sheet.appendRow(['25', 'Mobile Phones & Accessories']);
+  sheet.appendRow(['26', 'Computers & Software']);
+  sheet.appendRow(['27', 'Snacks & Confectionery']);
+  sheet.appendRow(['28', 'Fresh Fruits & Vegetables']);
+  sheet.appendRow(['29', 'Meat, Fish & Eggs']);
+  sheet.appendRow(['30', 'Cooking Ingredients & Spices']);
+  sheet.appendRow(['31', 'Beverages & Juices']);
+  sheet.appendRow(['32', 'Furniture & Decor']);
+  sheet.appendRow(['33', 'Bedding & Curtains']);
+  sheet.appendRow(['34', 'Kitchenware & Utensils']);
+  sheet.appendRow(['35', 'Tutoring & Academic Help']);
+  sheet.appendRow(['36', 'Laundry Services']);
+  sheet.appendRow(['37', 'Tailoring & Sewing']);
+  sheet.appendRow(['38', 'Salon & Barbershop']);
+  sheet.appendRow(['39', 'Others']);
 
   // Setup Settings sheet
   sheet = ss.insertSheet('Settings');
   sheet.appendRow(['Property', 'Value']);
 
   Logger.log('Database successfully created! The script is now linked to your new Database.');
+}
+
+// Run this function ONCE to update categories in an existing database (won't delete old data)
+function addMoreCategories() {
+  const sheet = getSheet('Categories');
+  const existingData = sheet.getDataRange().getValues();
+  const existingNames = existingData.map(row => row[1]);
+
+  const newCategories = [
+    'Food & Beverages', 'Fashion & Clothing', 'Electronics & Gadgets',
+    'Books & Stationery', 'Beauty & Personal Care', 'Health & Wellness',
+    'Services & Skills', 'Agriculture & Farm Produce', 'Handmade & Crafts',
+    'Sports & Fitness', 'Home & Living', 'Baby & Kids',
+    'Arts & Entertainment', 'Transport & Delivery', 'Printing & Stationery',
+    'Photography & Media', 'Event & Party Supplies',
+    'Detergents & Cleaning', 'Cosmetics & Skincare', 'Hair Products',
+    'Perfumes & Fragrances', 'Shoes & Footwear', 'Bags & Accessories',
+    'Jewelry & Watches', 'Mobile Phones & Accessories', 'Computers & Software',
+    'Snacks & Confectionery', 'Fresh Fruits & Vegetables', 'Meat, Fish & Eggs',
+    'Cooking Ingredients & Spices', 'Beverages & Juices',
+    'Furniture & Decor', 'Bedding & Curtains', 'Kitchenware & Utensils',
+    'Tutoring & Academic Help', 'Laundry Services', 'Tailoring & Sewing',
+    'Salon & Barbershop', 'Others'
+  ];
+
+  let nextId = existingData.length; // ID counter based on existing rows
+  newCategories.forEach(name => {
+    if (!existingNames.includes(name)) {
+      sheet.appendRow([nextId.toString(), name]);
+      nextId++;
+      Logger.log('Added: ' + name);
+    } else {
+      Logger.log('Already exists, skipped: ' + name);
+    }
+  });
+  Logger.log('Done! Categories updated.');
 }
 
 function generateId() {
